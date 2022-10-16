@@ -2,9 +2,12 @@
 #
 # `xterm-g` : Wrapper for xterm(1)
 
+normal=rgb:6f/bb/56
+bright=rgb:86/e4/68
+
 exec /usr/bin/xterm \
-	-fg rgb:6f/bb/56 \
-	-xrm 'XTerm*colorBD: rgb:86/e4/68' \
-	-cr rgb:86/e4/68
+	-fg "$normal" \
+	-xrm "XTerm*colorBD: $bright" \
+	-cr "$bright"
 	"$@"
 
