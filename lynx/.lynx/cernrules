@@ -1,4 +1,4 @@
-# ~/.cernrules
+# ~/.lynx/cernrules
 
 # Only works if URL doesn't contain any forward slashes, otherwise assumes
 # 'ftp://note/'.

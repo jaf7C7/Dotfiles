@@ -1,2 +1,5 @@
+# ~/.lynx/mailcap
+
 image/*; feh %s; ; test=test -n "$DISPLAY"
 application/pdf; firefox %s; ; test=test -n "$DISPLAY"
+
