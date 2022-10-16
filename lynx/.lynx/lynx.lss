@@ -2,6 +2,11 @@
 
 # Normal styles:
 h1:	bold
+h2:	bold
+h3:	bold
+h4:	bold
+h5:	bold
+h6:	bold
 bold:	bold
 em:	bold
 strong:	bold
