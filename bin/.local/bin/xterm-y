@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# `xterm-y` : Wrapper for xterm(1)
+
+exec /usr/bin/xterm \
+	-fg rgb:d3/a9/38 \
+	-xrm 'XTerm*colorBD: rgb:ff/cc/45' \
+	-cr rgb:ff/cc/45
+	"$@"
+

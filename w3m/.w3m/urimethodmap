@@ -1,0 +1,10 @@
+# ~/.w3m/urimethodmap
+#
+# Define (custom) uris and associated handlers.
+# e.g.
+#	magnet: file:/cgi-bin/magnet.py?%s
+# will invoke the magnet.py cgi script to handle magnet links,
+#	e: file:/cgi-bin/test.cgi?%s
+# will mark strings with 'e: ...' as uris and invoke test.cgi
+
+note: file:/cgi-bin/md2html.cgi?%s 

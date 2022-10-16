@@ -1,0 +1,11 @@
+# ~/.screenrc
+
+altscreen on
+bufferfile "$SCREEN_EXCHANGE"
+deflogin off
+defscrollback 10000
+startup_message off
+term screen
+windowlist string '%3n %t%30L=%?%h%:%x%?%L>%=%f'
+windowlist title 'Num Name%30L=Status/Cmd%-5=Flags'
+

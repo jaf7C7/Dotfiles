@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# `scmd` : Wrapper for `screen`
+
+case $1 in
+-q)
+	shift
+	screen -X msgwait 0
+	screen -Q "$@"
+	echo
+	screen -X msgwait 4 ;;
+readreg)
+	test "$2" = '-' && set -- readreg "$(cat)"
+	screen -X "$@" ;;
+*)
+	screen -X "$@"
+esac
+

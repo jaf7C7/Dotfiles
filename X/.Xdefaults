@@ -1,0 +1,43 @@
+! ~/.Xdefaults
+
+! Advertise full-color
+XTerm*termName: xterm-256color
+
+! Colours
+XTerm*foreground: rgb:dd/dd/dd
+XTerm*background: black
+XTerm*colorBD: rgb:ff/ff/ff
+XTerm*veryBoldColors: 15
+XTerm*colorBDMode: true
+XTerm*borderColor: rgb:30/30/30
+XTerm*cursorBlink: true
+XTerm*cursorOnTime: 500
+XTerm*cursorOffTime: 500
+
+! Fonts
+XTerm*font: -xos4-termingus-medium-r-normal--20-200-72-72-c-100-iso10646-1
+XTerm*boldFont: -xos4-termingus-bold-r-normal--20-200-72-72-c-100-iso10646-1
+XTerm*font1: -xos4-termingus-medium-r-normal--0-0-72-72-c-0-iso10646-1
+XTerm*font2: -xos4-termingus-medium-r-normal--16-160-72-72-c-80-iso10646-1
+XTerm*font3: -xos4-termingus-medium-r-normal--20-200-72-72-c-100-iso10646-1
+XTerm*font4: -xos4-termingus-medium-r-normal--22-220-72-72-c-110-iso10646-1
+XTerm*font5: -xos4-termingus-medium-r-normal--24-240-72-72-c-120-iso10646-1
+XTerm*font6: -xos4-termingus-medium-r-normal--28-280-72-72-c-140-iso10646-1
+XTerm*font7: -xos4-termingus-medium-r-normal--32-320-72-72-c-160-iso10646-1
+XTerm*SimpleMenu*font: -xos4-termingus-medium-r-normal--16-160-72-72-c-80-iso10646-1
+
+! Scrollbar
+XTerm*saveLines: 20000
+XTerm*scrollBar: true
+XTerm*thickness: 7
+
+! Selection
+XTerm*trimSelection: true
+XTerm*cutNewline: false
+
+! Bell
+XTerm*visualBell: true
+
+! Make alt behave properly
+XTerm*metaSendsEscape: true
+

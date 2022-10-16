@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# ~/.config/openbox/autostart
+#
+# This script is run by 'openbox-session'
+
+# TODO: Add volume, brightness and wifi widgets
+
+: "${BATDIR:=/sys/class/power_supply/BAT1}"
+export BATDIR
+
+# <date> <battery_info>
+/usr/bin/xterm \
+	-title 'Statusbar' \
+	-fg navajowhite1 \
+	+bc \
+	+sb \
+	-cr rgb:10/10/10 \
+	-geometry 49x1+0+0 \
+	-e sh -c '
+		while sleep 1
+		do
+			read -r stat <"$BATDIR/status"
+		        read -r cap <"$BATDIR/capacity"
+			printf "\\n%s\\t%s: %s%%" "$(date)" "$stat" "$cap"
+		done
+	'

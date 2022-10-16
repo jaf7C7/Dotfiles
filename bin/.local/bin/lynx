@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Wrapper for `lynx`
+
+export note_proxy=1
+exec /usr/bin/lynx \
+	-nocolor \
+	-cfg ~/.lynx/lynx.cfg \
+	-lss ~/.lynx/lynx.lss \
+	"$@"
+

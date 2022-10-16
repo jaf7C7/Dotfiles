@@ -1,0 +1,6 @@
+# ~/.cernrules
+
+# Only works if URL doesn't contain any forward slashes, otherwise assumes
+# 'ftp://note/'.
+Redirect note:* lynxcgi://localhost/home/joss/.local/cgi-bin/md2html.cgi?/home/joss/Notes/*
+

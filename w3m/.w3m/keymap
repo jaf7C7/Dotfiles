@@ -1,0 +1,15 @@
+# ~/.w3m/keymap (modified)
+#
+# Ctrl  : C-, ^
+# Escape: ESC-, M-, ^[
+# Space : SPC, ' '
+# Tab   : TAB, ^i, ^I
+# Delete: DEL, ^?
+# Up    : UP, ^[[A
+# Down  : DOWN, ^[[B
+# Right : RIGHT, ^[[C
+# Left  : LEFT, ^[[D
+
+# Default 'EDIT'
+keymap	E	GOTO /cgi-bin/w3medit.cgi
+

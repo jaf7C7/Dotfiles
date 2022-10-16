@@ -1,0 +1,173 @@
+#!/bin/sh
+#
+# `nb` : Note manager
+
+: "${NOTES:="$HOME/Notes"}"
+: "${EDITOR:=/bin/ed}"
+: "${PAGER:=/bin/more}"
+: "${BROWSER:=/usr/bin/lynx}"
+
+help () {
+	cat <<\EOF
+SUMMARY
+	nb : Create and search a repository of notes
+USAGE
+	nb [new|rm|open|show|edit] <id>
+	nb search <option> <query>
+COMMANDS
+	new
+		Create a new note
+	rm <id>
+		Delete note matching `<id>'
+	open <id>
+		Open note matching `<id>' in BROWSER
+	show <id>
+		Open note matching `<id>' in PAGER
+	edit <id>
+		Open note matching `<id>' in EDITOR
+	search <option> <query>
+		Search for notes matching `<query>' and print results
+		to stdout
+OPTIONS
+	-t : Search titles only
+	-i : Search case-insensitively
+	-l : Print results as markdown links
+	-n : Print matching filenames only
+
+   The default behaviour (with no non-option arguments) is to open
+   a new note in EDITOR. If the first non-option argument is not one of
+   `new', `rm',`edit', or `search', then `search' is assumed.
+
+EOF
+	exit
+}
+
+die () {
+	printf 'nb: %s\n' "$*" >&2
+	exit 1
+}
+
+id () {
+	date +%Y%d%m%H%M%S
+}
+
+new () {
+	id=$(id)
+	if test -t 0
+	then
+		"$EDITOR" "$id"
+	else
+		while IFS= read -r line
+		do
+			printf '%s\n' "$line"
+		done >"$id"
+	fi
+	test -e "$id" && printf '%s\n' "$id"
+}
+
+search () {
+	case $opts in
+	*i*)
+		grepopts=i
+	esac
+	case $opts in
+	*[tl]*) ;;
+	*)
+		case $opts in
+		*n*)
+			grepopts=${grepopts}l
+		esac
+		grep ${grepopts+-"$grepopts"} -- "$*" *
+		return
+	esac
+	set -- $(
+		grep '^# ' * |
+		grep ${grepopts+-"$grepopts"} -- "$*" |
+		while IFS= read -r line
+		do
+			printf '%s\n' "${line%%:*}"
+		done
+	)
+	test $# -gt 0 || return 1
+	for id
+	do
+		shift
+		read -r _ title <"$id"
+		case $opts in
+		*n*)
+			# 'n' overrides 'l'
+			set -- "$@" "$id" ;;
+		*l*)
+			set -- "$@" "[$title](note:$id)" ;;
+		*)
+			set -- "$@" "$id: $title"
+		esac
+	done
+	printf '%s\n' "$@"
+}
+
+show () {
+	exec "$PAGER" "$@"
+}
+
+open () {
+	set -- $*
+	for id
+	do
+		shift
+		set -- "$@" "note:$id"
+	done
+	exec "$BROWSER" "$@"
+}
+
+edit () {
+	exec "$EDITOR" $*
+}
+
+rm () {
+	set -- $*
+	while test $# -gt 0
+	do
+		read -r _ title <"$1"
+		printf 'delete `%s: %s'\''? [y/N] ' "$1" "$title"
+		read -r reply
+		case $reply in
+		y)
+			command rm "$1"
+		esac
+		shift
+	done
+}
+
+main () {
+	cd "$NOTES" || return 1
+	case $1 in
+	new|search|open|show|edit|rm)
+		func=$1
+		shift
+	esac
+	while test $# -gt 0
+	do
+		case $1 in
+		--)
+			break ;;
+		--help|-h)
+			help ;;
+		-*[!lnti]*)
+			die "\`$1': unknown option" ;;
+		-?*)
+			opts=${1#-}
+			shift ;;
+		*)
+			break
+		esac
+	done
+	case $1 in
+	''|-)
+		func=new
+	esac
+	"${func:-search}" "$@"
+}
+
+main "$@"
+

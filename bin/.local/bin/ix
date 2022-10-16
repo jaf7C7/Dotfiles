@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# `ix` : Command line pastebin
+#
+# Source: http://ix.io
+#
+# Usage:
+# 	$ echo 'hello world' | ix
+# 	http://ix.id/foo
+# 	$ ix file
+# 	http://ix.id/bar
+
+if [ "$1" ] && [ ! -e "$1" ]
+then
+	printf 'ix: %s: not found\n' "$1" >&2
+	return 1
+fi
+
+# See 'curl(1)'
+exec curl -F "f:1=<${1:--}" ix.io
+

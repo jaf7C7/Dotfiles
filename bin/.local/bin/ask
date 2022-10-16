@@ -1,0 +1,138 @@
+#!/bin/sh
+#
+# `ask` : Quick web search.
+
+# TODO: Proper url-encoding
+
+if test -z "$BROWSER"
+then
+	has () {
+		command -v "$@" >/dev/null 2>&1
+	}
+	if has lynx
+	then
+		BROWSER='lynx'
+	elif has firefox
+	then
+		BROWSER='firefox'
+	elif has x-www-browser
+	then
+		BROWSER='x-www-browser'
+	else
+		printf >&2 '%s\n' "\
+ask: could not find a web-browser
+please define the BROWSER variable or specify an application using:
+	\`ask -b <your-browser>'
+"
+	exit 1
+	fi
+fi
+
+help () {
+	printf '%s\n' "\
+USAGE:
+   ask [<options>] <query>
+
+OPTIONS:
+   -b <browser>
+      Choose a different browser (default is BROWSER)
+   -s <site-keyword>
+      Select a site for site-specific results
+       
+SITE KEYWORDS:
+   bashwiki : wiki.bash-hackers.org
+   jsinfo   : javascript.info
+   mdn      : developer.mozilla.org
+   posix    : pubs.opengroup.org
+   rfc      : rfc-editor.org
+   sf       : serverfault.com
+   so       : stackoverflow.com
+   tldp     : tldp.org
+   vimhelp  : vimhelp.org
+   vimwiki  : vim.fandom.com
+   whatwg   : html.spec.whatwg.org
+   wooledge : mywiki.wooledge.org
+
+For information on DuckDuckGo search syntax see:
+   https://help.duckduckgo.com/duckduckgo-help-pages/results/syntax
+   https://duckduckgo.com/params
+
+"
+	exit
+} >&2
+
+die () {
+	printf 'ask: %s\n' "$*"
+	exit 1
+}
+
+main () {
+	while test $# -gt 0
+	do
+		case $1 in
+		--) 
+			shift
+			break ;;
+		-s)
+			test -n "$2" || die "\`-s': option argument required"
+			site="$2"
+			shift 2 ;;
+		-b)
+			# NOTE: the new value of 'BROWSER' will be exported to
+			# any child processes of the application.
+			test -n "$2" || die "\`-s': option argument required"
+			BROWSER="$2"
+			shift 2 ;;
+		-h|--help)
+			help ;;
+		-?)
+			die "\`$1': bad option" ;;
+		*)
+			break
+		esac
+	done
+
+	# Default is a duckduckgo search:
+	#   https://help.duckduckgo.com/duckduckgo-help-pages/results/syntax
+	#   https://duckduckgo.com/params
+	url='https://lite.duckduckgo.com/lite?q='
+
+	case $site in
+	'')	# Do nothing.
+		;;
+	bashwiki)
+		site='wiki.bash-hackers.org' ;;
+	tldp)
+		site='tldp.org' ;;
+	jsinfo)
+		site='javascript.info' ;;
+	mdn)
+		site='developer.mozilla.org' ;;
+	posix)
+		site='pubs.opengroup.org' ;;
+	rfc)
+		site='rfc-editor.org' ;;
+	sf)
+		site='serverfault.com' ;;
+	so)
+		site='stackoverflow.com' ;;
+	vimhelp)
+		site='vimhelp.org' ;;
+	vimwiki)
+		site='vim.fandom.com' ;;
+	whatwg)
+		site='html.spec.whatwg.org' ;;
+	wooledge)
+		site='mywiki.wooledge.org' ;;
+	*)
+		die "\`$site': unrecognised site keyword"
+	esac
+
+	# Lazy url-encoding of the query string.
+	IFS='+' url="${url}${*}${site++site:"$site"}"
+
+	exec "$BROWSER" "$url"
+}
+
+main "$@"
+

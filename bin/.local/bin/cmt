@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# `cmt`: Filter which toggles comments.
+
+: "${CMT:=#}"
+
+case $1 in
+-c)
+	lnopen='/* '
+	lnclose=' */' ;;
+-C)
+	blkopen='/*'
+	lnopen=' * '
+	blkclose=' */' ;;
+-f)
+	shift
+	test -z "$1" && set -- "$CMT"
+	exec fmt -$((71-${#1})) | cmt "$1 " ;;
+-F)
+	shift
+	test -z "$1" && set -- "$CMT"
+	exec cmt "$@" | fmt -$((71-${#1})) | cmt "$1 " ;;
+-h)
+	lnopen='<!-- '
+	lnclose=' -->' ;;
+*)
+	lnopen=${1:-$CMT} ;;
+esac
+
+while IFS= read -r line
+do
+	if test -z "$line"
+	then
+		printf '\n'
+		continue
+	fi
+	if test -z "$first"
+	then
+		first="$line"
+		indent="${line%%[![:space:]]*}"
+		test "$line" = "${indent}${blkopen}" && continue
+		test -n "$blkopen" && printf '%s\n' "${indent}${blkopen}"
+		test -n "$blkclose" &&
+			trap 'printf "%s\\n" "${indent}${blkclose}"' 0
+	fi
+
+	line="${line#"$indent"}"
+
+	case $line in
+	"$blkclose")
+		trap - 0
+		continue ;;
+	"$lnopen "*) # only comment out code
+		;;
+	"$lnopen"*"$lnclose")
+		line="${line#"$lnopen"}"
+		line="${line%"$lnclose"}" ;;
+	*)
+		line="${lnopen}${line}${lnclose}"
+	esac
+
+	printf '%s\n' "${indent}${line}"
+done
+

@@ -1,0 +1,22 @@
+# ~/.lynx.lss
+
+# Normal styles:
+h1:	bold
+bold:	bold
+em:	bold
+strong:	bold
+a:	underline
+img:	dim
+iframe:	dim
+title:	bold
+
+# Special styles:
+alink:		bold+underline
+status:		reverse
+alert:		bold
+whereis:	reverse
+forwbackw.arrow:dim
+
+# Stackoverflow question title:
+a.question-hyperlink:	bold
+
