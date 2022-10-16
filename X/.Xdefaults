@@ -3,13 +3,14 @@
 ! Advertise full-color
 XTerm*termName: xterm-256color
 
-! Colours
+! Colours and Cursor
 XTerm*foreground: rgb:dd/dd/dd
 XTerm*background: black
 XTerm*colorBD: rgb:ff/ff/ff
 XTerm*veryBoldColors: 15
 XTerm*colorBDMode: true
 XTerm*borderColor: rgb:30/30/30
+XTerm*cursorColor: rgb:ff/ff/ff
 XTerm*cursorBlink: true
 XTerm*cursorOnTime: 500
 XTerm*cursorOffTime: 500
