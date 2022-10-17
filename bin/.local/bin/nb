@@ -51,6 +51,24 @@ id () {
 	date +%Y%d%m%H%M%S
 }
 
+print () {
+	for id
+	do
+		shift
+		read -r _ title <"$id"
+		case $opts in
+		*n*)
+			# 'n' overrides 'l'
+			set -- "$@" "$id" ;;
+		*l*)
+			set -- "$@" "[$title](note:$id)" ;;
+		*)
+			set -- "$@" "$id: $title"
+		esac
+	done
+	printf '%s\n' "$@"
+}
+
 new () {
 	id=$(id)
 	if test -t 0
@@ -62,7 +80,7 @@ new () {
 			printf '%s\n' "$line"
 		done >"$id"
 	fi
-	test -e "$id" && printf '%s\n' "$id"
+	test -e "$id" && print "$id"
 }
 
 search () {
@@ -89,21 +107,7 @@ search () {
 		done
 	)
 	test $# -gt 0 || return 1
-	for id
-	do
-		shift
-		read -r _ title <"$id"
-		case $opts in
-		*n*)
-			# 'n' overrides 'l'
-			set -- "$@" "$id" ;;
-		*l*)
-			set -- "$@" "[$title](note:$id)" ;;
-		*)
-			set -- "$@" "$id: $title"
-		esac
-	done
-	printf '%s\n' "$@"
+	print "$@"
 }
 
 show () {
