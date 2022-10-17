@@ -3,9 +3,9 @@
 # `nb` : Note manager
 
 : "${NOTES:="$HOME/Notes"}"
-: "${EDITOR:=/bin/ed}"
-: "${PAGER:=/bin/more}"
-: "${BROWSER:=/usr/bin/lynx}"
+: "${EDITOR:=ed}"
+: "${PAGER:=more}"
+: "${BROWSER:=lynx}"
 
 help () {
 	cat <<\EOF
