@@ -22,6 +22,21 @@ export BATDIR
 		do
 			read -r stat <"$BATDIR/status"
 		        read -r cap <"$BATDIR/capacity"
+			if test $((blink)) -eq 1
+			then
+				blink=0
+				case $stat in
+				Discharging)
+					test "$cap" -lt 20 &&
+					printf "\\033[01;41;37m" ;;
+				Charging|Full)
+					test "$cap" -gt 80 &&
+					printf "\\033[01;42;37m" ;;
+				esac
+			else
+				blink=1
+				printf "\\033[0m"
+			fi
 			printf "\\n%s\\t%s: %s%%" "$(date)" "$stat" "$cap"
 		done
 	'
