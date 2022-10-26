@@ -44,7 +44,7 @@
   </placement>
   <theme>
     <name>Mikachu</name>
-    <titleLayout>NLC</titleLayout>
+    <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
       N: window icon
@@ -292,8 +292,8 @@
       <action name="PreviousWindow">
         <finalactions>
           <action name="Focus"/>
-            <action name="Raise"/>
-            <action name="Unshade"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
         </finalactions>
       </action>
     </keybind>
