@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# `hddbackup` : Backup home dir to HDD ("Tub")
+
+set -e
+
+if test "$(lsblk | awk '/sda1/{print $NF}')" != "$HOME/Tub"
+then
+	echo "/dev/sda1 not mounted at $HOME/Tub" >&2
+	exit 1
+fi
+
+set -- ~/* ~/.ssh
+
+# Prevent copying contents of Tub to itself.
+for i
+do
+	shift
+	test "$i" = "$HOME/Tub" || set -- "$@" "$i"
+done
+
+for i
+do
+	cp -LRp "$i" "$HOME/Tub/${i##*/}"
+done
+
