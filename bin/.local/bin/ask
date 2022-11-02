@@ -41,6 +41,7 @@ OPTIONS:
        
 SITE KEYWORDS:
    bashwiki : wiki.bash-hackers.org
+   debian   : wiki.debian.org
    jsinfo   : javascript.info
    mdn      : developer.mozilla.org
    posix    : pubs.opengroup.org
@@ -102,6 +103,8 @@ main () {
 		;;
 	bashwiki)
 		site='wiki.bash-hackers.org' ;;
+	debian)
+		site='wiki.debian.org' ;;
 	tldp)
 		site='tldp.org' ;;
 	jsinfo)
