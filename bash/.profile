@@ -20,5 +20,5 @@ test "$PATH" = "$BIN:$DEFPATH" || PATH="$BIN:$DEFPATH"
 
 set +a
 
-startx
+command -v startx >/dev/null 2>&1 && startx
 
