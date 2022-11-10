@@ -30,7 +30,7 @@ XTerm*SimpleMenu*font: -xos4-termingus-medium-r-normal--16-160-72-72-c-80-iso106
 ! Scrollbar
 XTerm*saveLines: 20000
 XTerm*scrollBar: true
-XTerm*thickness: 7
+XTerm*Scrollbar*thickness: 7
 
 ! Selection
 XTerm*trimSelection: true
