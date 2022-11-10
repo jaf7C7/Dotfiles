@@ -16,12 +16,16 @@ export BATDIR
 	+bc \
 	+sb \
 	-cr rgb:10/10/10 \
-	-geometry 49x1+0+0 \
+	-geometry 56x1+0+0 \
 	-e sh -c '
 		while sleep 1
 		do
 			read -r stat <"$BATDIR/status"
 		        read -r cap <"$BATDIR/capacity"
+			vol=$(
+				amixer get Master |
+				awk "/Front Left:/{print \$5}"
+			)
 			if test $((blink)) -eq 1
 			then
 				blink=0
@@ -37,6 +41,7 @@ export BATDIR
 				blink=1
 				printf "\\033[0m"
 			fi
-			printf "\\n%s\\t%s: %s%%" "$(date)" "$stat" "$cap"
+			printf "\\n%s\\t%s: %s%% %s" \
+				"$(date)" "$stat" "$cap" "$vol"
 		done
 	'
