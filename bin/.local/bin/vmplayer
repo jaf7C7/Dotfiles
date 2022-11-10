@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# `vmplayer` : Wrapper for vmplayer
+
+sudo -b /usr/bin/vmplayer 2>/dev/null
+
