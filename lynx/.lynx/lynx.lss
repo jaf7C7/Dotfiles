@@ -1,6 +1,6 @@
 # ~/.lynx/lynx.lss
 
-# Normal styles:
+# Normal styles: (mono:colorbg:colorfg)
 h1:	bold
 h2:	bold
 h3:	bold
@@ -10,18 +10,18 @@ h6:	bold
 bold:	bold
 em:	bold
 strong:	bold
-a:	underline
-img:	dim
-iframe:	dim
+a:	bold:blue+bold
+img:	dim:yellow
+iframe:	dim:yellow
 title:	bold
 
 # Special styles:
-alink:		bold+underline
-status:		reverse
-alert:		bold
-whereis:	reverse
+alink:		bold+underline:bold+underline+cyan
+status:		reverse:reverse
+alert:		bold:white+bold:red
+whereis:	reverse:bold+red
 forwbackw.arrow:dim
 
 # Stackoverflow question title:
-a.question-hyperlink:	bold
+a.question-hyperlink:	bold:bold+magenta
 
