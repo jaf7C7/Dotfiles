@@ -19,5 +19,5 @@ esac
 tmp=/tmp/md.html
 pandoc -f gfm -t html5 "$@" -o "$tmp"
 
-"$BROWSER" "$tmp"
+exec "$BROWSER" "$tmp" >&- 2>&-
 
