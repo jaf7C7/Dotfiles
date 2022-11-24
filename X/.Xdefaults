@@ -4,7 +4,7 @@
 XTerm*termName: xterm-256color
 
 ! Colours and Cursor
-XTerm*foreground: rgb:dd/dd/dd
+XTerm*foreground: rgb:cd/cd/cd
 XTerm*background: black
 XTerm*colorBD: rgb:ff/ff/ff
 XTerm*veryBoldColors: 15
